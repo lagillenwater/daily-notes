@@ -26,6 +26,7 @@ TODAY="$(date '+%Y-%m-%d')"
 # Generate the markdown for today into daily-notes/.
 "$PYTHON" "$REPO_DIR/zotero_daily_notes.py" \
     --date "$TODAY" \
+    --by added \
     --data-dir "$DATA_DIR" \
     --out-dir "$OUT_DIR"
 

@@ -343,22 +343,15 @@ def render_markdown(entries, date_str, by):
         lines.append("_Nothing {} on this day._".format(verb))
         return "\n".join(lines) + "\n"
 
-    n_notes = sum(1 for e in entries if e["kind"] == "note")
-    n_annot = sum(1 for e in entries if e["kind"] == "annotation")
-    lines.append("_{} note(s), {} annotation(s), grouped by document._".format(n_notes, n_annot))
-    lines.append("")
-
+    # One section per article. The header is the citation when available,
+    # falling back to the group title. Under each header the entries appear as
+    # quote (blockquote of the highlighted text) followed by the note/comment.
     current = object()
     for e in entries:
         if e["group"] != current:
             current = e["group"]
-            lines += ["## {}".format(e["group"]), ""]
-            if e.get("citation"):
-                lines += ["*{}*".format(e["citation"]), ""]
-        tag = "note" if e["kind"] == "note" else (e["meta"] or "annotation")
-        lines.append("### {}".format(e["title"]))
-        lines.append("`{} · {} UTC`".format(tag, e["stamp"]))
-        lines.append("")
+            header = e.get("citation") or e["group"]
+            lines += ["## {}".format(header), ""]
         lines.append(e["body"])
         lines.append("")
     return "\n".join(lines) + "\n"
