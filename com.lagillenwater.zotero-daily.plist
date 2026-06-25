@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.lagillenwater.zotero-daily</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/lucas/Repositories/daily-notes/run_daily.sh</string>
+    </array>
+
+    <!-- Run every day at 18:00 (6pm) local time. -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>18</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- If the machine was asleep at 18:00, run as soon as it wakes. -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/lucas/Repositories/daily-notes/logs/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/lucas/Repositories/daily-notes/logs/launchd.err.log</string>
+</dict>
+</plist>
