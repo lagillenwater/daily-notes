@@ -21,6 +21,15 @@ echo "===== run $(date '+%Y-%m-%d %H:%M:%S %Z') ====="
 
 cd "$REPO_DIR"
 
+# Only run on weekdays. launchd may fire a missed job on wake, which could
+# land on a weekend, so guard here as well as in the launchd schedule.
+# %u gives the ISO weekday (1=Monday .. 7=Sunday).
+DOW="$(date '+%u')"
+if [ "$DOW" -gt 5 ]; then
+    echo "Skipping: $(date '+%A') is not a weekday."
+    exit 0
+fi
+
 TODAY="$(date '+%Y-%m-%d')"
 
 # Generate the markdown for today into daily-notes/.
