@@ -8,8 +8,11 @@
 
 set -euo pipefail
 
-REPO_DIR="/Users/lucas/Repositories/daily-notes"
-PYTHON="/opt/homebrew/bin/python3"
+# Resolve the repo directory from this script's own location so it works on
+# any machine regardless of username or checkout path.
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Prefer Homebrew python3 if present, otherwise fall back to whatever is on PATH.
+PYTHON="$(command -v /opt/homebrew/bin/python3 || command -v python3)"
 DATA_DIR="$HOME/Zotero"
 OUT_DIR="$REPO_DIR/daily-notes"
 LOG_DIR="$REPO_DIR/logs"
