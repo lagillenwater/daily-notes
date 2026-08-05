@@ -44,6 +44,13 @@ TODAY="$(date '+%Y-%m-%d')"
 
 OUT_FILE="$OUT_DIR/$TODAY.md"
 
+# The generator writes no file on days with nothing created; skip the rest so
+# empty days produce no commit or push.
+if [ ! -f "$OUT_FILE" ]; then
+    echo "No note generated for $TODAY; nothing to commit."
+    exit 0
+fi
+
 # Sync with remote first so a manual push elsewhere does not cause a rejection.
 git pull --rebase --autostash origin main || true
 

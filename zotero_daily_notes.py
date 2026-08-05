@@ -379,6 +379,13 @@ def main():
         conn.close()
         cleanup(tmp_path)
 
+    # Nothing was created/modified: don't write a file at all, so empty days
+    # leave no trace to commit and push.
+    if not entries:
+        verb = "modified" if args.by == "modified" else "created"
+        print("Nothing {} on {}; no file written.".format(verb, args.date))
+        return
+
     md = render_markdown(entries, args.date, args.by)
     out_dir = Path(args.out_dir).expanduser()
     out_dir.mkdir(parents=True, exist_ok=True)
